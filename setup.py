@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
@@ -14,8 +14,8 @@ setup(
     description = "Testing installation of Package",
     long_description = long_description,
     long_description_content_type = "text/markdown",
-    url='https://github.com/panthersinsights-fla/catnip',
-    license = 'MIT',
-    packages = ['catnip'],
+    url = "https://github.com/panthersinsights-fla/catnip",
+    license = "MIT",
+    packages = find_packages(),
     install_requires = requirements,
 )
