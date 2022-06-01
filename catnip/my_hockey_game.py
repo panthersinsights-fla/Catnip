@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 
 from datetime import datetime, timedelta
 
-from fla_archtics import FLA_Archtics
+from catnip.fla_archtics import FLA_Archtics
 
 @dataclass
 class MyHockeyGame:

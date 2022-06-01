@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 import pendulum
 
-from fla_helpers import FLA_Helpers
+from catnip.fla_helpers import FLA_Helpers
 
 @dataclass
 class FLA_Redshift:

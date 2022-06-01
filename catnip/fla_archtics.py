@@ -7,7 +7,7 @@ import pyodbc
 
 import os
 
-from fla_helpers import FLA_Helpers
+from catnip.fla_helpers import FLA_Helpers
 
 
 @dataclass
