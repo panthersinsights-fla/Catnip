@@ -16,8 +16,8 @@ from catnip.fla_helpers import FLA_Helpers
 class Fla_Sharepoint:
 
     ## User information
-    username : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get() #os.environ.get("MICROSOFT_USERNAME_EMAIL_NM")
-    password : str = Secret("PI_MICROSOFT_PASSWORD").get() #os.environ.get("MICROSOFT_PASSWORD_NM")
+    username : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get()
+    password : str = Secret("PI_MICROSOFT_PASSWORD").get()
 
     ## Sharepoint paths
     base_url : str = "https://floridapanthers.sharepoint.com"

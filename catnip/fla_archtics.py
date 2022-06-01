@@ -5,22 +5,20 @@ from prefect.client import Secret
 import pandas as pd
 import pyodbc 
 
-import os
-
 from catnip.fla_helpers import FLA_Helpers
 
 
 @dataclass
 class FLA_Archtics:
 
-    data_source_name : str = Secret("TM_DB_DSN").get() #os.environ.get("TM_DB_DSN")
-    user_id : str = Secret("TM_DB_USER_ID").get() #os.environ.get("TM_DB_USER_ID")
-    password : str = Secret("TM_DB_PASSWORD").get() #os.environ.get("TM_DB_PASSWORD")
+    data_source_name : str = Secret("TM_DB_DSN").get()
+    user_id : str = Secret("TM_DB_USER_ID").get()
+    password : str = Secret("TM_DB_PASSWORD").get()
 
     driver : str = "{SQL Anywhere 12}"
-    host : str = Secret("TM_DB_HOST").get() #os.environ.get("TM_DB_HOST")
-    database_name : str = Secret("TM_DB_NAME").get() #os.environ.get("TM_DB_DB_NAME")
-    port : str = Secret("TM_DB_PORT").get() #os.environ.get("TM_DB_PORT")
+    host : str = Secret("TM_DB_HOST").get()
+    database_name : str = Secret("TM_DB_NAME").get()
+    port : str = Secret("TM_DB_PORT").get()
 
     connection_string : str = field(init = False)
 
@@ -45,12 +43,6 @@ class FLA_Archtics:
         
         if filepath is not None:
             sql_string = FLA_Helpers().read_text_file(filepath)
-
-        # cnxn = pyodbc.connect(
-        #     dsn = self.dsn,
-        #     uid = self.uid,
-        #     pwd = self.pwd
-        #     )
 
         cnxn = pyodbc.connect(self.connection_string, readonly = True)
 

@@ -1,13 +1,10 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List
 
 from prefect.client import Secret 
 
 import pandas as pd
 import pandas_redshift as pr
-
-import os
-from dotenv import load_dotenv
 
 import pendulum
 
@@ -17,17 +14,17 @@ from catnip.fla_helpers import FLA_Helpers
 class FLA_Redshift:
 
     ## Database Info
-    dbname: str = Secret("KORE_REDSHIFT_DB_NAME").get() #os.environ.get("KORE_REDSHIFT_DB_NAME")
-    host: str = Secret("KORE_REDSHIFT_HOST").get() #os.environ.get("KORE_REDSHIFT_HOST")
-    port: int = Secret("KORE_REDSHIFT_PORT").get() #os.environ.get("KORE_REDSHIFT_PORT")
-    user: str = Secret("KORE_REDSHIFT_USER_NAME").get() #os.environ.get("KORE_REDSHIFT_USER_NAME")
-    password: str = Secret("KORE_REDSHIFT_PASSWORD").get() #os.environ.get("KORE_REDSHIFT_PASSWORD")
+    dbname: str = Secret("KORE_REDSHIFT_DB_NAME").get()
+    host: str = Secret("KORE_REDSHIFT_HOST").get()
+    port: int = Secret("KORE_REDSHIFT_PORT").get()
+    user: str = Secret("KORE_REDSHIFT_USER_NAME").get()
+    password: str = Secret("KORE_REDSHIFT_PASSWORD").get()
 
     ## S3 Bucket Info
-    aws_access_key_id: str = Secret("FLA_S3_AWS_ACCESS_KEY_ID").get() #os.environ.get("FLA_S3_AWS_ACCESS_KEY_ID")
-    aws_secret_access_key: str = Secret("FLA_S3_AWS_SECRET_ACCESS_KEY").get() #os.environ.get("FLA_S3_AWS_SECRET_ACCESS_KEY")
-    bucket: str = Secret("FLA_S3_BUCKET_NAME").get() #os.environ.get("FLA_S3_BUCKET_NAME")
-    subdirectory: str = Secret("FLA_S3_BUCKET_SUBDIRECTORY").get() #os.environ.get("FLA_S3_BUCKET_SUBDIRECTORY")
+    aws_access_key_id: str = Secret("FLA_S3_AWS_ACCESS_KEY_ID").get()
+    aws_secret_access_key: str = Secret("FLA_S3_AWS_SECRET_ACCESS_KEY").get()
+    bucket: str = Secret("FLA_S3_BUCKET_NAME").get()
+    subdirectory: str = Secret("FLA_S3_BUCKET_SUBDIRECTORY").get()
 
     def __post_init__(self):
 

@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field 
+from dataclasses import dataclass
 from typing import List, Any
 
 from prefect.client import Secret 
@@ -15,8 +15,8 @@ import os
 @dataclass
 class FLA_Email:
 
-    sender : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get() #os.environ.get("PI_MICROSOFT_USERNAME_EMAIL")
-    sender_pw : str = Secret("PI_MICROSOFT_PASSWORD").get() #os.environ.get("PI_MICROSOFT_PASSWORD")
+    sender : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get()
+    sender_pw : str = Secret("PI_MICROSOFT_PASSWORD").get()
 
     subject : str = ""
     body : str = ""         # HTML string

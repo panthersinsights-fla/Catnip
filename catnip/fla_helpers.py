@@ -4,7 +4,7 @@ import pandas as pd
 
 from io import StringIO
 
-from datetime import datetime, timedelta
+from datetime import datetime
 import pendulum
 
 
