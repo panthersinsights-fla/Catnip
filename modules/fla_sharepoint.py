@@ -1,5 +1,7 @@
 from dataclasses import dataclass, field 
 
+from prefect.client import Secret 
+
 from office365.sharepoint.client_context import ClientContext
 from office365.runtime.auth.user_credential import UserCredential
 
@@ -7,18 +9,15 @@ import pandas as pd
 
 import os
 import tempfile
-from dotenv import load_dotenv
 
 from fla_helpers import FLA_Helpers
 
 @dataclass
 class Fla_Sharepoint:
 
-    load_dotenv(f"C:/Users/{os.getlogin()}/Florida Panthers/SP-BS - Documents/Data Science/Projects/Environment/.env")
-
     ## User information
-    username : str = os.environ.get("MICROSOFT_USERNAME_EMAIL_NM")
-    password : str = os.environ.get("MICROSOFT_PASSWORD_NM")
+    username : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get() #os.environ.get("MICROSOFT_USERNAME_EMAIL_NM")
+    password : str = Secret("PI_MICROSOFT_PASSWORD").get() #os.environ.get("MICROSOFT_PASSWORD_NM")
 
     ## Sharepoint paths
     base_url : str = "https://floridapanthers.sharepoint.com"

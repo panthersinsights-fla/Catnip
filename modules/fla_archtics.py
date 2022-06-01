@@ -1,10 +1,11 @@
 from dataclasses import dataclass, field
 
+from prefect.client import Secret 
+
 import pandas as pd
 import pyodbc 
 
-import os 
-from dotenv import load_dotenv
+import os
 
 from fla_helpers import FLA_Helpers
 
@@ -12,16 +13,14 @@ from fla_helpers import FLA_Helpers
 @dataclass
 class FLA_Archtics:
 
-    load_dotenv(f"C:/Users/{os.getlogin()}/Florida Panthers/SP-BS - Documents/Data Science/Projects/Environment/.env")
-
-    data_source_name : str = os.environ.get("TM_DB_DSN")
-    user_id : str = os.environ.get("TM_DB_USER_ID")
-    password : str = os.environ.get("TM_DB_PASSWORD")
+    data_source_name : str = Secret("TM_DB_DSN").get() #os.environ.get("TM_DB_DSN")
+    user_id : str = Secret("TM_DB_USER_ID").get() #os.environ.get("TM_DB_USER_ID")
+    password : str = Secret("TM_DB_PASSWORD").get() #os.environ.get("TM_DB_PASSWORD")
 
     driver : str = "{SQL Anywhere 12}"
-    host : str = os.environ.get("TM_DB_HOST")
-    database_name : str = os.environ.get("TM_DB_DB_NAME")
-    port : str = os.environ.get("TM_DB_PORT")
+    host : str = Secret("TM_DB_HOST").get() #os.environ.get("TM_DB_HOST")
+    database_name : str = Secret("TM_DB_NAME").get() #os.environ.get("TM_DB_DB_NAME")
+    port : str = Secret("TM_DB_PORT").get() #os.environ.get("TM_DB_PORT")
 
     connection_string : str = field(init = False)
 

@@ -2,6 +2,7 @@ Office365-REST-Python-Client==2.3.11
 pandas==1.4.2
 pandas-redshift==2.0.5
 pendulum==2.1.2
+prefect==1.2.2
 pyodbc==4.0.32
 python-dotenv==0.20.0
 requests==2.27.1

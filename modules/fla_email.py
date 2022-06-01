@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field 
 from typing import List, Any
 
+from prefect.client import Secret 
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -8,16 +10,13 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 import os
-from dotenv import load_dotenv
 
 
 @dataclass
 class FLA_Email:
 
-    load_dotenv(f"C:/Users/{os.getlogin()}/Florida Panthers/SP-BS - Documents/Data Science/Projects/Environment/.env")
-
-    sender : str = os.environ.get("PI_MICROSOFT_USERNAME_EMAIL")
-    sender_pw : str = os.environ.get("PI_MICROSOFT_PASSWORD")
+    sender : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get() #os.environ.get("PI_MICROSOFT_USERNAME_EMAIL")
+    sender_pw : str = Secret("PI_MICROSOFT_PASSWORD").get() #os.environ.get("PI_MICROSOFT_PASSWORD")
 
     subject : str = ""
     body : str = ""         # HTML string
