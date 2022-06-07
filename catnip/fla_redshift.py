@@ -80,6 +80,15 @@ class FLA_Redshift:
         return df
 
 
+    def execute_and_commit(self, sql_string : str) -> None:
+
+        pr.exec_commit(sql_query = sql_string)
+
+        pr.close_up_shop()
+
+        return None
+
+
     def create_processed_date(self, df : pd.DataFrame) -> pd.DataFrame:
         
         df['processed_date'] = pd.to_datetime(pendulum.now().isoformat())
