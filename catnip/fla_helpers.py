@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import pandas as pd
 
 from io import StringIO
+from typing import List
 
 from datetime import datetime
 import pendulum
@@ -75,3 +76,9 @@ class FLA_Helpers:
         d2 = datetime.strptime(d2, "%Y-%m-%d")
 
         return abs((d2 - d1).days)
+
+
+    @staticmethod
+    def list_to_string_for_sql(a_list : List) -> str:
+
+        return str(a_list).replace("[", "(").replace("]", ")")

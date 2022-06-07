@@ -8,7 +8,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name = "catnip",
-    version = "0.0.425",
+    version = "0.0.43",
     author = "Panthers Insights",
     author_email = "panthersinsights@floridapanthers.com",
     description = "Testing installation of Package",
