@@ -79,6 +79,6 @@ class FLA_Helpers:
 
 
     @staticmethod
-    def list_to_string_for_sql(a_list : List) -> str:
+    def list_to_string_for_sql(this_is_a_list : List) -> str:
 
-        return str(a_list).replace("[", "(").replace("]", ")")
+        return str(this_is_a_list).replace("[", "(").replace("]", ")")

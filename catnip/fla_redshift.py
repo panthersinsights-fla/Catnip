@@ -14,11 +14,11 @@ from catnip.fla_helpers import FLA_Helpers
 class FLA_Redshift:
 
     ## Database Info
-    dbname: str = Secret("KORE_REDSHIFT_DB_NAME").get()
-    host: str = Secret("KORE_REDSHIFT_HOST").get()
-    port: int = Secret("KORE_REDSHIFT_PORT").get()
-    user: str = Secret("KORE_REDSHIFT_USER_NAME").get()
-    password: str = Secret("KORE_REDSHIFT_PASSWORD").get()
+    dbname: str = Secret("STELLAR_REDSHIFT_DB_NAME").get()
+    host: str = Secret("STELLAR_REDSHIFT_HOST").get()
+    port: int = Secret("STELLAR_REDSHIFT_PORT").get()
+    user: str = Secret("STELLAR_REDSHIFT_USER_NAME").get()
+    password: str = Secret("STELLAR_REDSHIFT_PASSWORD").get()
 
     ## S3 Bucket Info
     aws_access_key_id: str = Secret("FLA_S3_AWS_ACCESS_KEY_ID").get()
