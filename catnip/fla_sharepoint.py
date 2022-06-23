@@ -39,7 +39,7 @@ class Fla_Sharepoint:
     def upload_csv(
             self,
             df : pd.DataFrame,
-            file_name : str = f"{os.getlogin()}-test",
+            file_name : str = "thizz-iz-a-test",
             folder_path : str = "Testing-Folder",           # ie) Project/RestOfFolderPath
             add_log_date : bool = False
         ):

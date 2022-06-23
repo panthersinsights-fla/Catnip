@@ -20,7 +20,7 @@ class FLA_Email:
 
     subject : str = ""
     body : str = ""         # HTML string
-    receiver : str = f"{os.getlogin()}@floridapanthers.com"     # pass in single address
+    receiver : str = "mcgoyen@floridapanthers.com"     # pass in single address
     cc : Any = ""         # pass in single address or list of addresses
     
     attachments : List[str] = None
@@ -42,9 +42,12 @@ class FLA_Email:
 
         message.attach(MIMEText(self.body, "html"))
 
-        ## Need to update attachement functionality to accomodate interacting with SharePoint
-        ## ? submit sharepoint path -> download into tempfile location -> open as stream and attach ?
 
+        '''
+            - Need to update attachement functionality to accomodate interacting with SharePoint
+            - ? submit sharepoint path -> download into tempfile location -> open as stream and attach ?
+        
+        '''
         # for filepath in self.attachments:
         #     with open(filepath, "rb") as attachment:
         #         part = MIMEBase("application", "octet-stream")

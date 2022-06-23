@@ -11,11 +11,11 @@ setup(
     version = "0.0.44",
     author = "Panthers Insights",
     author_email = "panthersinsights@floridapanthers.com",
-    description = "Testing installation of Package",
+    description = "Facilitating repeatable internal code",
     long_description = long_description,
     long_description_content_type = "text/markdown",
     url = "https://github.com/panthersinsights-fla/catnip",
     license = "MIT",
     packages = find_packages(),
-    install_requires = requirements,
+    install_requires = requirements
 )
