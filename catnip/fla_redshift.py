@@ -21,10 +21,10 @@ class FLA_Redshift:
     password: str = Secret("STELLAR_REDSHIFT_PASSWORD").get()
 
     ## S3 Bucket Info
-    aws_access_key_id: str = Secret("FLA_S3_AWS_ACCESS_KEY_ID").get()
-    aws_secret_access_key: str = Secret("FLA_S3_AWS_SECRET_ACCESS_KEY").get()
-    bucket: str = Secret("FLA_S3_BUCKET_NAME").get()
-    subdirectory: str = Secret("FLA_S3_BUCKET_SUBDIRECTORY").get()
+    aws_access_key_id: str = Secret("FLA_S3_AWS_ACCESS_KEY_ID_STELLAR").get()
+    aws_secret_access_key: str = Secret("FLA_S3_AWS_SECRET_ACCESS_KEY_STELLAR").get()
+    bucket: str = Secret("FLA_S3_BUCKET_NAME_STELLAR").get()
+    subdirectory: str = Secret("FLA_S3_BUCKET_SUBDIRECTORY_STELLAR").get()
 
     def __post_init__(self):
 
