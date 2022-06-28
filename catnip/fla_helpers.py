@@ -13,7 +13,7 @@ import pendulum
 class FLA_Helpers:
     
     @staticmethod
-    def read_text_file(filepath : str):
+    def read_text_file(filepath : str) -> str:
 
         with open(filepath, 'r') as file:
             this_string = file.read()
@@ -30,11 +30,11 @@ class FLA_Helpers:
         return file
 
     @staticmethod
-    def get_today_date_string_for_logging():
+    def get_today_date_string_for_logging() -> str:
         return "-" + str(pendulum.now().to_datetime_string())[:-9] + "-" + str(pendulum.now().to_datetime_string()).replace(":", "")[-6:]
 
     @staticmethod
-    def get_current_datetime():
+    def get_current_datetime() -> pd.Timestamp:
         return pd.to_datetime(pendulum.now().isoformat())
 
     @staticmethod
@@ -54,11 +54,11 @@ class FLA_Helpers:
         return '{:,.0f}'.format(x)
 
     @staticmethod
-    def format_with_percents(x):    
+    def format_with_percents(x) -> str:    
         return str(round((x*100), 1)) + "%"
 
     @staticmethod
-    def fill_na_by_type(df : pd.DataFrame):
+    def fill_na_by_type(df : pd.DataFrame) -> pd.DataFrame:
 
         for col in df:
             dt = df[col].dtype 
@@ -82,3 +82,9 @@ class FLA_Helpers:
     def list_to_string_for_sql(this_is_a_list : List) -> str:
 
         return str(this_is_a_list).replace("[", "(").replace("]", ")")
+
+    
+    @staticmethod
+    def sort_df_cols(df : pd.DataFrame) -> pd.DataFrame: ## Sort Columns Alphabetically ##
+
+        return df.reindex(sorted(df.columns), axis = 1)
