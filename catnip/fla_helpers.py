@@ -8,6 +8,7 @@ from typing import List
 from datetime import datetime
 import pendulum
 
+from prefect import context
 
 @dataclass
 class FLA_Helpers:
@@ -85,6 +86,17 @@ class FLA_Helpers:
 
     
     @staticmethod
-    def sort_df_cols(df : pd.DataFrame) -> pd.DataFrame: ## Sort Columns Alphabetically ##
+    def sort_df_cols(df : pd.DataFrame) -> pd.DataFrame: 
 
+        ## Sort Columns Alphabetically ##
+        
         return df.reindex(sorted(df.columns), axis = 1)
+
+    
+    @staticmethod
+    def write_to_logs(log_text : str) -> None:
+
+        logger = context["logger"]
+        logger.info(f"{log_text}")
+
+        return None
