@@ -65,7 +65,7 @@ class FLA_Helpers:
             dt = df[col].dtype 
             if dt == int or dt == float:
                 df[col] = df[col].fillna(0)
-            else:
+            elif dt == object:
                 df[col] = df[col].fillna("Other")
 
         return df 
