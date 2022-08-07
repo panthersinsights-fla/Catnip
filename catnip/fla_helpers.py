@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 
 import pandas as pd
+from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 from io import StringIO
 from typing import List
@@ -65,6 +66,8 @@ class FLA_Helpers:
             dt = df[col].dtype 
             if dt == int or dt == float:
                 df[col] = df[col].fillna(0)
+            elif is_datetime(dt):
+                df[col] = df[col].fillna(datetime(2012, 12, 21))
             elif dt == object:
                 df[col] = df[col].fillna("N/A")
 
