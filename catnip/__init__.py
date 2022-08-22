@@ -4,6 +4,7 @@ from catnip.fla_helpers import FLA_Helpers
 from catnip.fla_redshift import FLA_Redshift
 from catnip.fla_sharepoint import Fla_Sharepoint
 from catnip.my_hockey_game import MyHockeyGame
+from catnip.fla_teams import FLA_Teams
 
 
 __all__ =[
@@ -12,5 +13,6 @@ __all__ =[
     "FLA_Helpers",
     "FLA_Redshift",
     "Fla_Sharepoint",
-    "MyHockeyGame"
+    "MyHockeyGame",
+    "FLA_Teams"
 ]
