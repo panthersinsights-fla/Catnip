@@ -1,6 +1,7 @@
 Office365-REST-Python-Client==2.3.11
 pandas==1.4.2
 pandas-redshift==2.0.5
+paramiko==2.11.0
 pendulum==2.1.2
 prefect==1.2.2
 pymsteams==0.2.1
