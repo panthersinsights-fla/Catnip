@@ -33,6 +33,22 @@ class MyHockeyGame:
             AND e.minor_category in ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
             AND e.event_name not like '%TEST%'
     '''
+            
+    def __post_init__(self):
+
+        self.event_opponent = self.get_event_opponent()
+        self.event_names = self.get_event_names()
+        self.event_time = self.get_event_time()
+
+        self.event_dow = self.current_datetime.strftime('%A')
+        self.doors_time = datetime.strptime(str(self.event_time - timedelta(minutes = 45))[11:16],'%H:%M').strftime('%#I:%M %p')
+        self.event_time_formatted = datetime.strptime(str(self.event_time)[11:16],'%H:%M').strftime('%#I:%M %p')
+
+        self.puckdrop = datetime.strptime(str(self.event_time + timedelta(minutes = 15))[11:16],'%H:%M')
+        self.final_timestamp = datetime.strptime(str(self.puckdrop + timedelta(hours = 1, minutes = 30))[11:16],'%H:%M').strftime('%#I:%M %p')
+        self.puckdrop = self.puckdrop.strftime('%#I:%M %p')
+
+        self.this_game_filename  = str(self.event_opponent).replace(" ", "") + "_" + self.current_date + "_TurnstileScans.csv"
 
     def get_event_opponent(self):
 
@@ -51,19 +67,3 @@ class MyHockeyGame:
         df = FLA_Archtics().query_database(sql_string = self.sql_select_statement.format("event_time"))
 
         return datetime.strptime(str(df.iloc[0, 0]), '%H:%M:%S')
-            
-    def __post_init__(self):
-
-        self.event_opponent = self.get_event_opponent()
-        self.event_names = self.get_event_names()
-        self.event_time = self.get_event_time()
-
-        self.event_dow = self.current_datetime.strftime('%A')
-        self.doors_time = datetime.strptime(str(self.event_time - timedelta(minutes = 45))[11:16],'%H:%M').strftime('%#I:%M %p')
-        self.event_time_formatted = datetime.strptime(str(self.event_time)[11:16],'%H:%M').strftime('%#I:%M %p')
-
-        self.puckdrop = datetime.strptime(str(self.event_time + timedelta(minutes = 15))[11:16],'%H:%M')
-        self.final_timestamp = datetime.strptime(str(self.puckdrop + timedelta(hours = 1, minutes = 30))[11:16],'%H:%M').strftime('%#I:%M %p')
-        self.puckdrop = self.puckdrop.strftime('%#I:%M %p')
-
-        self.this_game_filename  = str(self.event_opponent).replace(" ", "") + "_" + self.current_date + "_TurnstileScans.csv"

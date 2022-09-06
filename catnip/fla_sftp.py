@@ -25,26 +25,26 @@ class FLA_Sftp:
 
         return connection
 
-    def file_exists(self, conn: SFTPClient) -> None:
+    def file_exists(self, conn: SFTPClient) -> bool:
 
         try:
             conn.stat(self.remote_path)
+            return True
 
         except SFTPError as e:
             print(f"The specified file on this '{self.remote_path}' remote_path does not exist.")
-            raise e
-
-        return None
+            return False
 
     def download_csv(self) -> pd.DataFrame:
 
         conn = self._create_connection()
 
-        self.file_exists(conn)
+        df = pd.DataFrame()
 
-        with conn.open(self.remote_path) as file:
-            file.prefetch()
-            df = pd.read_csv(file)
+        if self.file_exists(conn):
+            with conn.open(self.remote_path) as file:
+                file.prefetch()
+                df = pd.read_csv(file)
 
         return df
 

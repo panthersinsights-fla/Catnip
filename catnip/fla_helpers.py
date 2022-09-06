@@ -103,3 +103,22 @@ class FLA_Helpers:
         logger.info(f"{log_text}")
 
         return None
+
+    @staticmethod
+    def unnest_json_column(df: pd.DataFrame, column_name: str) -> pd.DataFrame:
+
+        unnest_df = pd.json_normalize(df[column_name])
+        unnest_df.columns = [f"{s}_{column_name}" for s in unnest_df.columns]
+        
+        df = df.join(unnest_df)
+        df = df.drop(columns=[column_name])
+
+        return df 
+
+    @staticmethod
+    def standardize_column_names(df: pd.DataFrame) -> pd.DataFrame:
+
+        df.columns = [s.replace(" ", "_") for s in df.columns] 
+        df.columns = [''.join(e.lower() for e in s if e.isalnum() or e == "_") for s in df.columns] 
+
+        return df 
