@@ -4,7 +4,7 @@ import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 from io import StringIO
-from typing import List
+from typing import List, Union
 
 from datetime import datetime
 import pendulum
@@ -15,7 +15,7 @@ from prefect import context
 class FLA_Helpers:
     
     @staticmethod
-    def read_text_file(filepath : str) -> str:
+    def read_text_file(filepath: str) -> str:
 
         with open(filepath, 'r') as file:
             this_string = file.read()
@@ -23,7 +23,7 @@ class FLA_Helpers:
         return this_string
 
     @staticmethod
-    def convert_df_to_csv_file_object(df : pd.DataFrame):
+    def convert_df_to_csv_file_object(df: pd.DataFrame):
 
         file = StringIO()
         df.to_csv(file)
@@ -60,7 +60,7 @@ class FLA_Helpers:
         return str(round((x*100), 1)) + "%"
 
     @staticmethod
-    def fill_na_by_type(df : pd.DataFrame) -> pd.DataFrame:
+    def fill_na_by_type(df: pd.DataFrame) -> pd.DataFrame:
 
         for col in df:
             dt = df[col].dtype 
@@ -74,22 +74,26 @@ class FLA_Helpers:
         return df 
 
     @staticmethod
-    def get_days_between(d1, d2):
+    def get_days_between(d1: Union[datetime, str], d2:Union[datetime, str]) -> int:
 
-        d1 = datetime.strptime(d1, "%Y-%m-%d")
-        d2 = datetime.strptime(d2, "%Y-%m-%d")
+        if (type(d1) is not datetime) and (type(d2) is not datetime):
+            try:
+                d1 = datetime.strptime(d1, "%Y-%m-%d")
+                d2 = datetime.strptime(d2, "%Y-%m-%d")
+            except: 
+                print("must be either a datetime object or a string in the format of YYYY-MM-DD !!")
 
         return abs((d2 - d1).days)
 
 
     @staticmethod
-    def list_to_string_for_sql(this_is_a_list : List) -> str:
+    def list_to_string_for_sql(this_is_a_list: List) -> str:
 
         return str(this_is_a_list).replace("[", "(").replace("]", ")")
 
     
     @staticmethod
-    def sort_df_cols(df : pd.DataFrame) -> pd.DataFrame: 
+    def sort_df_cols(df: pd.DataFrame) -> pd.DataFrame: 
 
         ## Sort Columns Alphabetically ##
         
@@ -97,23 +101,25 @@ class FLA_Helpers:
 
     
     @staticmethod
-    def write_to_logs(log_text : str) -> None:
+    def write_to_logs(log_text: str) -> None:
 
         logger = context["logger"]
         logger.info(f"{log_text}")
 
         return None
 
+
     @staticmethod
     def unnest_json_column(df: pd.DataFrame, column_name: str) -> pd.DataFrame:
 
         unnest_df = pd.json_normalize(df[column_name])
-        unnest_df.columns = [f"{s}_{column_name}" for s in unnest_df.columns]
+        unnest_df.columns = [f"{s}_{column_name}".lower().strip().replace(" ", "_") for s in unnest_df.columns]
         
         df = df.join(unnest_df)
         df = df.drop(columns=[column_name])
 
         return df 
+
 
     @staticmethod
     def standardize_column_names(df: pd.DataFrame) -> pd.DataFrame:
@@ -122,3 +128,22 @@ class FLA_Helpers:
         df.columns = [''.join(e.lower() for e in s if e.isalnum() or e == "_") for s in df.columns] 
 
         return df 
+
+
+    def pd_dtype_to_redshift_dtype(dtype: str) -> str:
+
+        if dtype.startswith('int64'):
+            return 'BIGINT'
+        elif dtype.startswith('int'):
+            return 'INTEGER'
+        elif dtype.startswith('float'):
+            return 'REAL'
+        elif dtype.startswith('datetime'):
+            return 'TIMESTAMP'
+        elif dtype == 'bool':
+            return 'BOOLEAN'
+        else:
+            return 'VARCHAR(5000)'
+
+    def get_column_data_types(self, df: pd.DataFrame) -> List:
+        return [self.pd_dtype_to_redshift_dtype(dtype.name) for dtype in df.dtypes.values]
