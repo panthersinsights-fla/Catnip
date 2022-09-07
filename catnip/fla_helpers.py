@@ -130,7 +130,7 @@ class FLA_Helpers:
         return df 
 
 
-    def pd_dtype_to_redshift_dtype(dtype: str) -> str:
+    def pd_dtype_to_redshift_dtype(self, dtype: str) -> str:
 
         if dtype.startswith('int64'):
             return 'BIGINT'
