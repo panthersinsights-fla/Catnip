@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
 from paramiko import Transport, SFTPClient, SFTPError
 import pandas as pd
@@ -24,6 +24,12 @@ class FLA_Sftp:
         connection = SFTPClient.from_transport(transport)        
 
         return connection
+
+    def get_all_filenames_in_directory(self) -> List:
+
+        conn = self._create_connection()
+
+        return conn.listdir(self.remote_path)
 
     def file_exists(self, conn: SFTPClient) -> bool:
 
