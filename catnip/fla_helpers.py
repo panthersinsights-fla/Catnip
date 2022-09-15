@@ -143,7 +143,7 @@ class FLA_Helpers:
         elif dtype == 'bool':
             return 'BOOLEAN'
         else:
-            return 'VARCHAR(5000)'
+            return 'VARCHAR(MAX)'
 
     def get_column_data_types(self, df: pd.DataFrame) -> List:
         return [self.pd_dtype_to_redshift_dtype(dtype.name) for dtype in df.dtypes.values]
