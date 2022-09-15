@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Any
+from typing import List
 
 from prefect.client import Secret 
 
@@ -15,22 +15,20 @@ import os
 @dataclass
 class FLA_Email:
 
-    sender : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get()
-    sender_pw : str = Secret("PI_MICROSOFT_PASSWORD").get()
+    sender: str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get()
+    sender_pw: str = Secret("PI_MICROSOFT_PASSWORD").get()
 
-    subject : str = ""
-    body : str = ""         # HTML string
-    receiver : str = "mcgoyen@floridapanthers.com"     # pass in single address
-    cc : Any = ""         # pass in single address or list of addresses
+    receiver: str = "mcgoyen@floridapanthers.com" # pass in single address
+
+    subject: str = ""
+    body: str = ""         # HTML string
+    cc: List = None         # pass in single address or list of addresses
     
     attachments : List[str] = None
 
     def send_email(self) -> None:
 
-        if isinstance(self.cc, list):
-            cc_stringlist = ", ".join(self.cc)
-        else:
-            cc_stringlist = self.cc
+        cc_stringlist = ", ".join(self.cc) if self.cc is not None else [""]
 
         message = MIMEMultipart()
 
