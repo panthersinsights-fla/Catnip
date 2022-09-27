@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-
 from datetime import datetime, timedelta
+from typing import List
 
 from catnip.fla_archtics import FLA_Archtics
 
@@ -20,7 +20,7 @@ class MyHockeyGame:
     current_time_formatted : str = datetime.now().strftime('%#I:%M %p')
     current_time : datetime.time = datetime.now().time()
     current_date : str = datetime.now().strftime('%m-%d-%y')
-    event_names: list = field(default_factory=list)
+    event_names: List = field(default_factory=list)
 
     sql_select_statement : str = '''
         SELECT 

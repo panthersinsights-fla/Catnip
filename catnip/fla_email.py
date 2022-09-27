@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 from prefect.client import Secret 
@@ -22,7 +22,7 @@ class FLA_Email:
 
     subject: str = ""
     body: str = ""         # HTML string
-    cc: List = []        # pass in single address or list of addresses
+    cc: List = field(default_factory=lambda: [])        # pass in single address or list of addresses
     
     attachments : List[str] = None
 
