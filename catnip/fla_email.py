@@ -22,13 +22,13 @@ class FLA_Email:
 
     subject: str = ""
     body: str = ""         # HTML string
-    cc: List = None         # pass in single address or list of addresses
+    cc: List = []        # pass in single address or list of addresses
     
     attachments : List[str] = None
 
     def send_email(self) -> None:
 
-        cc_stringlist = ", ".join(self.cc) if self.cc is not None else ""
+        cc_stringlist = ", ".join(self.cc)
 
         message = MIMEMultipart()
 
@@ -36,7 +36,7 @@ class FLA_Email:
         message['To'] = self.receiver
         message['Subject'] = self.subject
         message['Cc'] = cc_stringlist
-        to_addrs = [self.receiver] + cc_stringlist
+        to_addrs = [self.receiver] + self.cc
 
         message.attach(MIMEText(self.body, "html"))
 
