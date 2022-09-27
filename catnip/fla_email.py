@@ -28,7 +28,7 @@ class FLA_Email:
 
     def send_email(self) -> None:
 
-        cc_stringlist = ", ".join(self.cc) if self.cc is not None else [""]
+        cc_stringlist = ", ".join(self.cc) if self.cc is not None else ""
 
         message = MIMEMultipart()
 
