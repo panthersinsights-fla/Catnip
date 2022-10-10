@@ -149,4 +149,4 @@ class FLA_Helpers:
 
     @staticmethod
     def to_bool(s):
-        return 1 if s == 'true' else 0
+        return 1 if s else 0
