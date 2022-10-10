@@ -129,7 +129,6 @@ class FLA_Helpers:
 
         return df 
 
-
     def pd_dtype_to_redshift_dtype(self, dtype: str) -> str:
 
         if dtype.startswith('int64'):
@@ -147,3 +146,7 @@ class FLA_Helpers:
 
     def get_column_data_types(self, df: pd.DataFrame) -> List:
         return [self.pd_dtype_to_redshift_dtype(dtype.name) for dtype in df.dtypes.values]
+
+    @staticmethod
+    def to_bool(s):
+        return 1 if s == 'true' else 0

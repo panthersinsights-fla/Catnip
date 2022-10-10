@@ -33,7 +33,7 @@ class FLA_Archtics:
         ''').strip().replace("\\n", "").replace("  ", "").replace("'", "")
 
 
-    def query_database(self, sql_string = None, filepath = None):
+    def query_database(self, sql_string = None, filepath = None) -> pd.DataFrame:
 
         '''
             Must input either:
