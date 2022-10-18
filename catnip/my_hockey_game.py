@@ -29,9 +29,10 @@ class MyHockeyGame:
             [DBA].v_event e 
         WHERE 
             --CAST(e.event_date AS DATE) = CAST(GETDATE() AS DATE)
-            CAST(e.event_date AS DATE) = CAST(DATEADD(DAY, 2, CAST(GETDATE() AS DATE)) AS DATE)
+            CAST(e.event_date AS DATE) = CAST(DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AS DATE)
             AND e.minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
             AND e.event_name NOT LIKE '%TEST%'
+            AND season_id = 355
     '''
             
     def __post_init__(self):
