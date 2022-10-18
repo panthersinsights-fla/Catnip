@@ -16,10 +16,10 @@ class MyHockeyGame:
     this_game_filename : str = field(init=False) 
     event_dow : str = field(init=False)
 
-    current_datetime : datetime = datetime.now()
-    current_time_formatted : str = datetime.now().strftime('%#I:%M %p')
-    current_time : datetime.time = datetime.now().time()
-    current_date : str = datetime.now().strftime('%m-%d-%y')
+    current_datetime : datetime = datetime.now() - timedelta(hours = 4)
+    current_time_formatted : str = datetime.strftime(datetime.now() - timedelta(hours = 4), '%#I:%M %p')
+    current_time : datetime.time = (datetime.now() - timedelta(hours = 4)).time()
+    current_date : str = datetime.strftime(datetime.now() - timedelta(hours = 4), '%m-%d-%y')
     event_names: List = field(default_factory=list)
 
     sql_select_statement : str = '''
@@ -28,8 +28,8 @@ class MyHockeyGame:
         FROM 
             [DBA].v_event e 
         WHERE 
-            --CAST(e.event_date AS DATE) = CAST(GETDATE() AS DATE)
-            CAST(e.event_date AS DATE) = CAST(DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AS DATE)
+            CAST(e.event_date AS DATE) = CAST(GETDATE() AS DATE)
+            --CAST(e.event_date AS DATE) = CAST(DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AS DATE)
             AND e.minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
             AND e.event_name NOT LIKE '%TEST%'
             AND season_id = 355
