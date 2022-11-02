@@ -136,7 +136,7 @@ class FLA_Helpers:
         elif dtype.startswith('int'):
             return 'INTEGER'
         elif dtype.startswith('float'):
-            return 'REAL'
+            return 'FLOAT'
         elif dtype.startswith('datetime'):
             return 'TIMESTAMP'
         elif dtype == 'bool':

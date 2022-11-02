@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from typing import List
 
-from catnip.fla_archtics import FLA_Archtics
+from catnip.fla_redshift import FLA_Redshift
 
 @dataclass
 class MyHockeyGame:
@@ -13,7 +13,6 @@ class MyHockeyGame:
     event_time_formatted : str = field(init=False)
     puckdrop : str = field(init=False)
     final_timestamp : str = field(init=False)
-    this_game_filename : str = field(init=False) 
     event_dow : str = field(init=False)
 
     current_datetime : datetime = datetime.now() - timedelta(hours = 4)
@@ -26,12 +25,12 @@ class MyHockeyGame:
         SELECT 
             {0}
         FROM 
-            [DBA].v_event e 
-        WHERE 
-            CAST(e.event_date AS DATE) = CAST(GETDATE() AS DATE)
-            --CAST(e.event_date AS DATE) = CAST(DATEADD(DAY, 1, CAST(GETDATE() AS DATE)) AS DATE)
-            AND e.minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
-            AND e.event_name NOT LIKE '%TEST%'
+            custom.arch_cth_raw_v_event e
+        WHERE
+            --to_date(event_date, 'YYYY-MM-DD') = CAST(GETDATE() AS DATE)
+            to_date(event_date, 'YYYY-MM-DD') = CAST(dateadd(DAY, 7, getdate()) AS DATE)
+            AND minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
+            AND event_name NOT LIKE '%TEST%'
             AND season_id = 355
     '''
             
@@ -49,22 +48,20 @@ class MyHockeyGame:
         self.final_timestamp = datetime.strptime(str(self.puckdrop + timedelta(hours = 1, minutes = 30))[11:16],'%H:%M').strftime('%#I:%M %p')
         self.puckdrop = self.puckdrop.strftime('%#I:%M %p')
 
-        self.this_game_filename  = str(self.event_opponent).replace(" ", "") + "_" + self.current_date + "_TurnstileScans.csv"
-
     def get_event_opponent(self):
 
-        df = FLA_Archtics().query_database(sql_string = self.sql_select_statement.format("team"))
+        df = FLA_Redshift().query_warehouse(sql_string = self.sql_select_statement.format("team"))
 
         return df.iloc[0, 0]
 
     def get_event_names(self):
 
-        df = FLA_Archtics().query_database(sql_string = self.sql_select_statement.format("event_name"))
+        df = FLA_Redshift().query_warehouse(sql_string = self.sql_select_statement.format("event_name"))
 
         return list(set(list(df['event_name'])))
     
     def get_event_time(self):
 
-        df = FLA_Archtics().query_database(sql_string = self.sql_select_statement.format("event_time"))
+        df = FLA_Redshift().query_warehouse(sql_string = self.sql_select_statement.format("event_time"))
 
         return datetime.strptime(str(df.iloc[0, 0]), '%H:%M:%S')
