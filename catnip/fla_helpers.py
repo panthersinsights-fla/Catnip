@@ -62,7 +62,7 @@ class FLA_Helpers:
     @staticmethod
     def fill_na_by_type(df: pd.DataFrame) -> pd.DataFrame:
 
-        for col in df:
+        for col in df.columns:
             dt = df[col].dtype 
             if dt == int or dt == float:
                 df[col] = df[col].fillna(0)
