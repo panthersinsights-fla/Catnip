@@ -26,9 +26,9 @@ class MyHockeyGame:
             {0}
         FROM 
             custom.arch_cth_raw_v_event e
-        WHERE
-            --to_date(event_date, 'YYYY-MM-DD') = CAST(GETDATE() AS DATE)
-            to_date(event_date, 'YYYY-MM-DD') = CAST(dateadd(DAY, -1, getdate()) AS DATE)
+        WHERE 
+            to_date(event_date, 'YYYY-MM-DD') = CAST(GETDATE() - interval '5 hour' AS DATE)
+            --to_date(event_date, 'YYYY-MM-DD') = CAST(dateadd(DAY, -1, getdate()) AS DATE)
             AND minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
             AND event_name NOT LIKE '%TEST%'
             AND season_id = 355
