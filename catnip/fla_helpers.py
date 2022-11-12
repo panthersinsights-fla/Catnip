@@ -124,7 +124,7 @@ class FLA_Helpers:
     @staticmethod
     def standardize_column_names(df: pd.DataFrame) -> pd.DataFrame:
 
-        df.columns = [s.replace(" ", "_") for s in df.columns] 
+        df.columns = [str(s).replace(" ", "_").replace("/", "_") for s in df.columns] 
         df.columns = [''.join(e.lower() for e in s if e.isalnum() or e == "_") for s in df.columns] 
 
         return df 
