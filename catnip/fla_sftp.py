@@ -41,7 +41,7 @@ class FLA_Sftp:
             print(f"The specified file on this '{self.remote_path}' remote_path does not exist.")
             return False
 
-    def download_csv(self) -> pd.DataFrame:
+    def download_csv(self, separator: str = ",") -> pd.DataFrame:
 
         conn = self._create_connection()
 
@@ -50,7 +50,7 @@ class FLA_Sftp:
         if self.file_exists(conn):
             with conn.open(self.remote_path) as file:
                 file.prefetch()
-                df = pd.read_csv(file)
+                df = pd.read_csv(file, sep = separator)
 
         return df
 
