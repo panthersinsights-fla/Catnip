@@ -4,6 +4,7 @@ import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
 from io import StringIO
+import re
 from typing import List, Union
 
 from datetime import datetime
@@ -124,10 +125,14 @@ class FLA_Helpers:
     @staticmethod
     def standardize_column_names(df: pd.DataFrame) -> pd.DataFrame:
 
-        df.columns = [str(s).replace(" ", "_").replace("/", "_") for s in df.columns] 
+        pattern = re.compile(r'(?<!^)(?=[A-Z])')
+        df.columns = [pattern.sub('_', s).lower() for s in df.columns]
+
+        df.columns = [str(s).replace(" ", "_").replace("/", "_").replace(".", "_") for s in df.columns] 
         df.columns = [''.join(e.lower() for e in s if e.isalnum() or e == "_") for s in df.columns] 
 
         return df 
+
 
     def pd_dtype_to_redshift_dtype(self, dtype: str) -> str:
 
