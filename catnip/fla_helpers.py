@@ -123,11 +123,12 @@ class FLA_Helpers:
 
 
     @staticmethod
-    def standardize_column_names(df: pd.DataFrame) -> pd.DataFrame:
+    def standardize_column_names(df: pd.DataFrame, snake_case: bool = False) -> pd.DataFrame:
 
-        pattern = re.compile(r'(?<!^)(?=[A-Z])')
-        df.columns = [pattern.sub('_', s).lower() for s in df.columns]
-
+        if snake_case:
+            pattern = re.compile(r'(?<!^)(?=[A-Z])')
+            df.columns = [pattern.sub('_', s).lower() for s in df.columns]
+        
         df.columns = [str(s).replace(" ", "_").replace("/", "_").replace(".", "_") for s in df.columns] 
         df.columns = [''.join(e.lower() for e in s if e.isalnum() or e == "_") for s in df.columns] 
 
