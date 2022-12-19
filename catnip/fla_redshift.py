@@ -83,7 +83,6 @@ class FLA_Redshift:
     def execute_and_commit(self, sql_string : str) -> None:
 
         pr.exec_commit(sql_query = sql_string)
-
         pr.close_up_shop()
 
         return None

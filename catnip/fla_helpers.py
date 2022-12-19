@@ -151,7 +151,7 @@ class FLA_Helpers:
             return 'VARCHAR(MAX)'
 
     def get_column_data_types(self, df: pd.DataFrame) -> List:
-        return [self.pd_dtype_to_redshift_dtype(dtype.name) for dtype in df.dtypes.values]
+        return [self.pd_dtype_to_redshift_dtype(str(dtype.name).lower()) for dtype in df.dtypes.values]
 
     @staticmethod
     def to_bool(s):
