@@ -18,7 +18,7 @@ class MyHockeyGame:
     current_datetime : datetime = datetime.now() - timedelta(hours = 5)
     current_time_formatted : str = datetime.strftime(datetime.now() - timedelta(hours = 5), '%#I:%M %p')
     current_time : datetime.time = (datetime.now() - timedelta(hours = 5)).time()
-    current_date : str = datetime.strftime(datetime.now() - timedelta(hours = 5), '%#m-%#d-%y')
+    current_date : str = datetime.strftime(datetime.now() - timedelta(hours = 5), '%-m-%-d-%y')
     event_names: List = field(default_factory=list)
 
     sql_select_statement : str = '''
