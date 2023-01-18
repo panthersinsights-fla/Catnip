@@ -75,7 +75,7 @@ class FLA_Helpers:
         return df 
 
     @staticmethod
-    def get_days_between(d1: Union[datetime, str], d2:Union[datetime, str]) -> int:
+    def get_days_between(d1: Union[datetime, str], d2: Union[datetime, str]) -> int:
 
         if (type(d1) is not datetime) and (type(d2) is not datetime):
             try:
