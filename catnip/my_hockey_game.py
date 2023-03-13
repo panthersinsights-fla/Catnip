@@ -7,27 +7,27 @@ from catnip.fla_redshift import FLA_Redshift
 @dataclass
 class MyHockeyGame:
 
-    event_time : datetime = field(init=False)
-    event_opponent : str = field(init=False)
-    doors_time : str = field(init=False)
-    event_time_formatted : str = field(init=False)
-    puckdrop : str = field(init=False)
-    final_timestamp : str = field(init=False)
-    event_dow : str = field(init=False)
+    event_time: datetime = field(init=False)
+    event_opponent: str = field(init=False)
+    doors_time: str = field(init=False)
+    event_time_formatted: str = field(init=False)
+    puckdrop: str = field(init=False)
+    final_timestamp: str = field(init=False)
+    event_dow: str = field(init=False)
 
-    current_datetime : datetime = datetime.now() - timedelta(hours = 5)
-    current_time_formatted : str = datetime.strftime(datetime.now() - timedelta(hours = 5), '%#I:%M %p')
-    current_time : datetime.time = (datetime.now() - timedelta(hours = 5)).time()
-    current_date : str = datetime.strftime(datetime.now() - timedelta(hours = 5), '%-m-%-d-%y')
+    current_datetime: datetime = datetime.now() - timedelta(hours = 4)
+    current_time_formatted: str = datetime.strftime(datetime.now() - timedelta(hours = 4), '%#I:%M %p')
+    current_time: datetime.time = (datetime.now() - timedelta(hours = 4)).time()
+    #current_date: str = datetime.strftime(datetime.now() - timedelta(hours = 4), '%-m-%-d-%y')
     event_names: List = field(default_factory=list)
 
-    sql_select_statement : str = '''
+    sql_select_statement: str = '''
         SELECT 
             {0}
         FROM 
             custom.arch_cth_raw_v_event e
         WHERE 
-            to_date(event_date, 'YYYY-MM-DD') = CAST(GETDATE() - interval '5 hour' AS DATE)
+            to_date(event_date, 'YYYY-MM-DD') = CAST(GETDATE() - interval '4 hour' AS DATE)
             --to_date(event_date, 'YYYY-MM-DD') = CAST(dateadd(DAY, -1, getdate()) AS DATE)
             AND minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
             AND event_name NOT LIKE '%TEST%'
