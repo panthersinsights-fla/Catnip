@@ -31,7 +31,7 @@ class MyHockeyGame:
             --to_date(event_date, 'YYYY-MM-DD') = CAST(dateadd(DAY, -1, getdate()) AS DATE)
             AND minor_category IN ('NHL PRO HOCKEY', 'SPORTS:NHL PRO HOCKEY')
             AND event_name NOT LIKE '%TEST%'
-            AND season_id = 355
+            AND season_id IN (355, 375)
     '''
             
     def __post_init__(self):
