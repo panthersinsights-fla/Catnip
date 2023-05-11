@@ -49,18 +49,23 @@ class FLA_Redshift:
             df: pd.DataFrame,
             table_name: str,
             append: bool = False,
-            column_data_types: List = None
+            column_data_types: List = None,
+            copy_parameters = ""
         ) -> None:
 
         df = self.create_processed_date(df)
-        table_name_string = "custom." + table_name
 
-        if append:
-            pr.pandas_to_redshift(data_frame = df, redshift_table_name = table_name_string, column_data_types = column_data_types, append = True)
-        else:
-            pr.pandas_to_redshift(data_frame = df, redshift_table_name = table_name_string, column_data_types = column_data_types)
+        pr.pandas_to_redshift(
+            data_frame = df, 
+            redshift_table_name = f"custom.{table_name}", 
+            append = append,
+            column_data_types = column_data_types, 
+            parameters = copy_parameters
+        )
 
         pr.close_up_shop()
+
+        return None
 
 
     def query_warehouse(self, sql_string = None, filepath = None) -> pd.DataFrame:
