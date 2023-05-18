@@ -69,6 +69,19 @@ class FLA_Sftp:
         return df
 
 
+    def download_file(self) -> pd.DataFrame:
+
+        ## Create connection
+        conn = self._create_connection()
+
+        ## Download file
+        if self.file_exists(conn):
+            with conn.open(self.remote_path) as file:
+                file.prefetch()
+
+        return file
+    
+
     def upload_csv(self, df: pd.DataFrame) -> None:
 
         ## Create connection
