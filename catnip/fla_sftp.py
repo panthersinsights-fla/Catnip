@@ -76,11 +76,17 @@ class FLA_Sftp:
         ## Create connection
         conn = self._create_connection()
 
+        conn.get(self.remote_path, f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}")
+
+        print(f"Moved {self.remote_path} to {getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}")
+
         ## Download file
-        if self.file_exists(conn):
-            with conn.open(self.remote_path) as file:
-                file.prefetch()
-                file.write(f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}")
+        # if self.file_exists(conn):
+        #     with conn.open(self.remote_path) as file:
+        #         file.prefetch()
+
+        #         with open(f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}", "w") as temp_file:
+        #             file.write(temp_file)
 
         return None
     
