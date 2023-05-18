@@ -71,24 +71,22 @@ class FLA_Sftp:
         return df
 
 
-    def download_file(self, temp_filename: str) -> None:
+    def download_file(self, temp_filename: str) -> str:
 
         ## Create connection
         conn = self._create_connection()
 
-        conn.get(self.remote_path, f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}")
+        ## Create local path string
+        local_path = f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}"
 
-        print(f"Moved {self.remote_path} to {getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}")
+        ## Download file and write to local path
+        conn.get(self.remote_path, local_path)
 
-        ## Download file
-        # if self.file_exists(conn):
-        #     with conn.open(self.remote_path) as file:
-        #         file.prefetch()
+        ## Notify path
+        print(f"Moved {self.remote_path} to {local_path}")
 
-        #         with open(f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}", "w") as temp_file:
-        #             file.write(temp_file)
-
-        return None
+        ## Return written path string
+        return local_path
     
 
     def upload_csv(self, df: pd.DataFrame) -> None:
