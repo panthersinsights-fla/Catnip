@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from typing import Optional, List
 
 from paramiko import Transport, SFTPClient, SFTPError
+from os import getcwd
+
 import pandas as pd
 
 
@@ -69,7 +71,7 @@ class FLA_Sftp:
         return df
 
 
-    def download_file(self) -> pd.DataFrame:
+    def download_file(self, temp_filename: str) -> None:
 
         ## Create connection
         conn = self._create_connection()
@@ -78,8 +80,9 @@ class FLA_Sftp:
         if self.file_exists(conn):
             with conn.open(self.remote_path) as file:
                 file.prefetch()
+                file.write(f"{getcwd()}/{temp_filename}.{self.remote_path.split('.')[1]}")
 
-        return file
+        return None
     
 
     def upload_csv(self, df: pd.DataFrame) -> None:
