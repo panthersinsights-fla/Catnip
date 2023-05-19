@@ -42,7 +42,7 @@ class Fla_Sharepoint:
             file_name : str = "thizz-iz-a-test",
             folder_path : str = "Testing-Folder",           # ie) Project/RestOfFolderPath
             add_log_date : bool = False
-        ):
+        ) -> None:
         
         file = FLA_Helpers().convert_df_to_csv_file_object(df)
 
@@ -55,7 +55,31 @@ class Fla_Sharepoint:
 
         print(target_file.serverRelativeUrl)
 
-    
+        return None
+
+
+    def upload_xml(
+            self,
+            df : pd.DataFrame,
+            file_name : str = "thizz-iz-a-test",
+            folder_path : str = "Testing-Folder",           # ie) Project/RestOfFolderPath
+            add_log_date : bool = False
+        ) -> None:
+        
+        file = FLA_Helpers().convert_df_to_xml_file_object(df)
+
+        this_folder = self.connect_folder(folder_path)
+
+        if add_log_date:
+            target_file = this_folder.upload_file(file_name + FLA_Helpers().get_today_date_string_for_logging() + ".xml", file).execute_query()
+        else:
+            target_file = this_folder.upload_file(file_name + ".xml", file).execute_query()
+
+        print(target_file.serverRelativeUrl)
+
+        return None
+
+
     def download_file(
             self, 
             folder_path : str,

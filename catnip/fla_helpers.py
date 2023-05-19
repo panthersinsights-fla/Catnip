@@ -33,6 +33,15 @@ class FLA_Helpers:
         return file
 
     @staticmethod
+    def convert_df_to_xml_file_object(df: pd.DataFrame):
+
+        file = StringIO()
+        df.to_xml(file)
+        file.seek(0)
+
+        return file
+    
+    @staticmethod
     def get_today_date_string_for_logging() -> str:
         return "-" + str(pendulum.now().to_datetime_string())[:-9] + "-" + str(pendulum.now().to_datetime_string()).replace(":", "")[-6:]
 
