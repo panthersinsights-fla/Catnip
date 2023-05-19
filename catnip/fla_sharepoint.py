@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field 
+from typing import Union
 
 from prefect.client import Secret 
 
@@ -44,15 +45,19 @@ class Fla_Sharepoint:
             add_log_date : bool = False
         ) -> None:
         
+        ## Convert dataframe
         file = FLA_Helpers().convert_df_to_csv_file_object(df)
 
+        ## Connect folder
         this_folder = self.connect_folder(folder_path)
 
+        ## Upload file
         if add_log_date:
             target_file = this_folder.upload_file(file_name + FLA_Helpers().get_today_date_string_for_logging() + ".csv", file).execute_query()
         else:
             target_file = this_folder.upload_file(file_name + ".csv", file).execute_query()
 
+        ## Print path
         print(target_file.serverRelativeUrl)
 
         return None
@@ -66,15 +71,19 @@ class Fla_Sharepoint:
             add_log_date : bool = False
         ) -> None:
         
+        ## Convert dataframe
         file = FLA_Helpers().convert_df_to_xml_file_object(df)
 
+        ## Connect folder
         this_folder = self.connect_folder(folder_path)
 
+        ## Upload file
         if add_log_date:
             target_file = this_folder.upload_file(file_name + FLA_Helpers().get_today_date_string_for_logging() + ".xml", file).execute_query()
         else:
             target_file = this_folder.upload_file(file_name + ".xml", file).execute_query()
 
+        ## Print path
         print(target_file.serverRelativeUrl)
 
         return None
@@ -85,7 +94,7 @@ class Fla_Sharepoint:
             folder_path : str,
             file_name : str,
             is_csv : bool = False
-        ):
+        ) -> Union[pd.DataFrame, str]:
 
         file_url = self.site_path + self.project_folder + folder_path + "/" + file_name
 

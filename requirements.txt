@@ -1,3 +1,4 @@
+lxml==4.9.2
 Office365-REST-Python-Client==2.3.11
 pandas==1.4.2
 pandas-redshift==2.0.5

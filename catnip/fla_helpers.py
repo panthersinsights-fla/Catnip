@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import pandas as pd
 from pandas.api.types import is_datetime64_any_dtype as is_datetime
 
-from io import StringIO
+from io import StringIO, BytesIO
 import re
 from typing import List, Union
 
@@ -35,7 +35,7 @@ class FLA_Helpers:
     @staticmethod
     def convert_df_to_xml_file_object(df: pd.DataFrame):
 
-        file = StringIO()
+        file = BytesIO()
         df.to_xml(file)
         file.seek(0)
 
