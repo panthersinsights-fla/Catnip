@@ -50,7 +50,7 @@ class FLA_Redshift:
             table_name: str,
             append: bool = False,
             column_data_types: List = None,
-            copy_parameters = ""
+            copy_parameters: str = "BLANKSASNULL"
         ) -> None:
 
         df = self.create_processed_date(df)
