@@ -17,14 +17,14 @@ from catnip.fla_helpers import FLA_Helpers
 class Fla_Sharepoint:
 
     ## User information
-    username : str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get()
-    password : str = Secret("PI_MICROSOFT_PASSWORD").get()
+    username: str = Secret("PI_MICROSOFT_USERNAME_EMAIL").get()
+    password: str = Secret("PI_MICROSOFT_PASSWORD").get()
 
     ## Sharepoint paths
-    base_url : str = "https://floridapanthers.sharepoint.com"
-    site_path : str = "/sites/SP-BS/"
-    project_folder : str = "Shared Documents/Data Science/Projects/"
-    site_url : str = field(init = False)
+    base_url: str = "https://floridapanthers.sharepoint.com"
+    site_path: str = "/sites/SP-BS/"
+    project_folder: str = "Shared Documents/Data Science/Projects/"
+    site_url: str = field(init = False)
 
 
     def __post_init__(self):
@@ -39,10 +39,10 @@ class Fla_Sharepoint:
 
     def upload_csv(
             self,
-            df : pd.DataFrame,
-            file_name : str = "thizz-iz-a-test",
-            folder_path : str = "Testing-Folder",           # ie) Project/RestOfFolderPath
-            add_log_date : bool = False
+            df: pd.DataFrame,
+            file_name: str = "thizz-iz-a-test",
+            folder_path: str = "Testing-Folder",           # ie) Project/RestOfFolderPath
+            add_log_date: bool = False
         ) -> None:
         
         ## Convert dataframe
@@ -53,9 +53,9 @@ class Fla_Sharepoint:
 
         ## Upload file
         if add_log_date:
-            target_file = this_folder.upload_file(file_name + FLA_Helpers().get_today_date_string_for_logging() + ".csv", file).execute_query()
+            target_file = this_folder.upload_file(f"{file_name}{FLA_Helpers().get_today_date_string_for_logging()}.csv", file).execute_query()
         else:
-            target_file = this_folder.upload_file(file_name + ".csv", file).execute_query()
+            target_file = this_folder.upload_file(f"{file_name}.csv", file).execute_query()
 
         ## Print path
         print(target_file.serverRelativeUrl)
@@ -65,10 +65,10 @@ class Fla_Sharepoint:
 
     def upload_xml(
             self,
-            df : pd.DataFrame,
-            file_name : str = "thizz-iz-a-test",
-            folder_path : str = "Testing-Folder",           # ie) Project/RestOfFolderPath
-            add_log_date : bool = False
+            df: pd.DataFrame,
+            file_name: str = "thizz-iz-a-test",
+            folder_path: str = "Testing-Folder",           # ie) Project/RestOfFolderPath
+            add_log_date: bool = False
         ) -> None:
         
         ## Convert dataframe
@@ -91,9 +91,9 @@ class Fla_Sharepoint:
 
     def download_file(
             self, 
-            folder_path : str,
-            file_name : str,
-            is_csv : bool = False
+            folder_path: str,
+            file_name: str,
+            is_csv: bool = False
         ) -> Union[pd.DataFrame, str]:
 
         file_url = self.site_path + self.project_folder + folder_path + "/" + file_name
@@ -112,7 +112,7 @@ class Fla_Sharepoint:
         
         return file
 
-    def connect_folder(self, folder_name : str = None):
+    def connect_folder(self, folder_name: str = None):
 
         '''
             Project + rest of folder path
