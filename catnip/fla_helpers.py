@@ -27,7 +27,7 @@ class FLA_Helpers:
     def convert_df_to_csv_file_object(df: pd.DataFrame):
 
         file = StringIO()
-        df.to_csv(file)
+        df.to_csv(file, index = False, encoding = 'utf-8')
         file.seek(0)
 
         return file
