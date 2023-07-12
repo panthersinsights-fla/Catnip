@@ -93,7 +93,9 @@ class Fla_Sharepoint:
             self, 
             folder_path: str,
             file_name: str,
-            is_csv: bool = False
+            is_csv: bool = False,
+            is_excel_file: bool = False,
+            sheet_name: str = "",
         ) -> Union[pd.DataFrame, str]:
 
         file_url = self.site_path + self.project_folder + folder_path + "/" + file_name
@@ -105,6 +107,8 @@ class Fla_Sharepoint:
 
         if is_csv:
             file = pd.read_csv(download_path)
+        elif is_excel_file:
+            file = pd.read_excel(download_path, sheet_name=sheet_name)
         else:
             file = FLA_Helpers().read_text_file(download_path)
 
